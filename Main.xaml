@@ -94,18 +94,14 @@
       <Variable x:TypeArguments="s:Exception" Name="System_Exception" />
       <Variable x:TypeArguments="ui:BusinessRuleException" Name="Business_Exception" />
       <Variable x:TypeArguments="x:String" Name="Transaction_ID" />
-      <Variable x:TypeArguments="x:String" Name="Internal_Mail_IDs">
-        <Variable.Default>
-          <Literal x:TypeArguments="x:String">sharath.chandran@quadance.com;prasanth.muthusamy@quadance.com</Literal>
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="x:String" Default="sharath.chandran@quadance.com;prasanth.muthusamy@quadance.com" Name="Internal_Mail_IDs" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="902.4,1075.2" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch_Main" sap:VirtualizedContainerService.HintSize="902.4,1075.2" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
         <Flowchart sap:VirtualizedContainerService.HintSize="865.6,844" sap2010:WorkflowViewState.IdRef="Flowchart_1">
           <sap:WorkflowViewStateService.ViewState>
@@ -172,7 +168,7 @@
                         <av:PointCollection x:Key="ConnectorLocation">140,396.4 140,453.6</av:PointCollection>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;No mails are available to read&quot;]">
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;No Input mails are available to read&quot;]">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
