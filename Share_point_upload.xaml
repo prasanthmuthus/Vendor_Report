@@ -1,18 +1,16 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Share_point_update" this:Share_point_update.In_Retry_Count="3" this:Share_point_update.In_Share_Point_FileName="C:\Users\Prasanth\Documents\Vendor_Report\UCC QA Audit.xlsx" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:us="clr-namespace:UiPathTeam.SharePoint;assembly=UiPathTeam.SharePoint" xmlns:usa="clr-namespace:UiPathTeam.SharePoint.Activities;assembly=UiPathTeam.SharePoint.Activities" xmlns:usal="clr-namespace:UiPathTeam.SharePoint.Activities.Libraries;assembly=UiPathTeam.SharePoint.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Share_point_update" this:Share_point_update.In_Retry_Count="3" this:Share_point_update.In_Share_Point_FileName="C:\Users\Prasanth\Documents\Vendor_Report\UCC QA Audit.xlsx" this:Share_point_update.In_Config="[new Dictionary(of string,object)]" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:us="clr-namespace:UiPathTeam.SharePoint;assembly=UiPathTeam.SharePoint" xmlns:usa="clr-namespace:UiPathTeam.SharePoint.Activities;assembly=UiPathTeam.SharePoint.Activities" xmlns:usal="clr-namespace:UiPathTeam.SharePoint.Activities.Libraries;assembly=UiPathTeam.SharePoint.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="In_Asset_SharePoint_url" Type="InArgument(x:String)" />
-    <x:Property Name="In_Asset_SharePoint_folder_path" Type="InArgument(x:String)" />
     <x:Property Name="In_Retry_Count" Type="InArgument(x:Int32)" />
     <x:Property Name="In_Share_Point_FileName" Type="InArgument(x:String)" />
-    <x:Property Name="In_Asset_SharePoint_Library" Type="InArgument(x:String)" />
+    <x:Property Name="In_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="In_SharePoint_url_KeyName" Type="InArgument(x:String)" />
+    <x:Property Name="In_SharePoint_Library_KeyName" Type="InArgument(x:String)" />
+    <x:Property Name="In_SharePoint_Folder_KeyName" Type="InArgument(x:String)" />
   </x:Members>
-  <this:Share_point_update.In_Asset_SharePoint_Library>
-    <InArgument x:TypeArguments="x:String" />
-  </this:Share_point_update.In_Asset_SharePoint_Library>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>797.6,1575.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>801.6,836.8</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Share_point_update_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -88,16 +86,11 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>System.Collections.Immutable</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Sequence_Main" sap:VirtualizedContainerService.HintSize="846.4,3096.8" sap2010:WorkflowViewState.IdRef="Sequence_10">
+  <Sequence DisplayName="Sequence_Main" sap:VirtualizedContainerService.HintSize="656,772" sap2010:WorkflowViewState.IdRef="Sequence_10">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="SharePoint_FolderName">
-        <Variable.Default>
-          <Literal x:TypeArguments="x:String">UCC TPL/Viewgol Productivity</Literal>
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="x:String" Default="UCC TPL/Viewgol Productivity" Name="SharePoint_Upload_FolderName" />
       <Variable x:TypeArguments="x:String" Default="https://quadance.sharepoint.com/sites/Uipath/" Name="Sharepoint_url" />
       <Variable x:TypeArguments="x:String" Name="SP_currentMonth_Folder" />
       <Variable x:TypeArguments="x:Boolean" Name="Is_folder_exist" />
@@ -105,35 +98,34 @@
       <Variable x:TypeArguments="x:String" Name="SP_Upload_FileName" />
       <Variable x:TypeArguments="x:String" Default="prasanth.muthusamy@quadance.com" Name="SharePoint_Username" />
       <Variable x:TypeArguments="ss:SecureString" Name="SharePoint_Password" />
-      <Variable x:TypeArguments="x:String" Name="SP_Library_Name">
-        <Variable.Default>
-          <Literal x:TypeArguments="x:String">Documents</Literal>
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="x:String" Default="Documents" Name="SP_Library_Name" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="784,2984.8" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[In_Retry_Count]">
+    <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="593.6,660" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[In_Retry_Count]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="742.4,2808.8" sap2010:WorkflowViewState.IdRef="Sequence_12">
+          <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="552,484" sap2010:WorkflowViewState.IdRef="Sequence_12">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="680,2696.8" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+            <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="489.6,372" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
               <TryCatch.Try>
-                <Sequence DisplayName="Sequence_SharePoint" sap:VirtualizedContainerService.HintSize="643.2,2465.6" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                <Sequence DisplayName="Sequence_SharePoint" sap:VirtualizedContainerService.HintSize="592,1596" sap2010:WorkflowViewState.IdRef="Sequence_7">
                   <Sequence.Variables>
-                    <Variable x:TypeArguments="x:String" Name="SharePoint_Library">
-                      <Variable.Default>
-                        <Literal x:TypeArguments="x:String">UCC TPL Work Comp</Literal>
-                      </Variable.Default>
-                    </Variable>
+                    <Variable x:TypeArguments="x:String" Default="UCC TPL Work Comp" Name="SharePoint_Library" />
                   </Sequence.Variables>
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -141,30 +133,14 @@
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="580.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Share Point Flow Started&quot;]" />
-                  <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="[In_Asset_SharePoint_url]" CacheStrategy="None" DisplayName="Get Asset_SharePoint_URL" sap:VirtualizedContainerService.HintSize="580.8,139.2" sap2010:WorkflowViewState.IdRef="GetRobotAsset_3">
-                    <ui:GetRobotAsset.Value>
-                      <OutArgument x:TypeArguments="x:String">[Sharepoint_url]</OutArgument>
-                    </ui:GetRobotAsset.Value>
-                  </ui:GetRobotAsset>
-                  <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="[In_Asset_SharePoint_Library]" CacheStrategy="None" DisplayName="Get Asset_SharePoint_Library" sap:VirtualizedContainerService.HintSize="580.8,139.2" sap2010:WorkflowViewState.IdRef="GetRobotAsset_5">
-                    <ui:GetRobotAsset.Value>
-                      <OutArgument x:TypeArguments="x:String">[SharePoint_Library]</OutArgument>
-                    </ui:GetRobotAsset.Value>
-                  </ui:GetRobotAsset>
-                  <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="[In_Asset_SharePoint_folder_path]" CacheStrategy="None" DisplayName="Get Asset_SharePoint_FolderName" sap:VirtualizedContainerService.HintSize="580.8,139.2" sap2010:WorkflowViewState.IdRef="GetRobotAsset_4">
-                    <ui:GetRobotAsset.Value>
-                      <OutArgument x:TypeArguments="x:String">[SharePoint_FolderName]</OutArgument>
-                    </ui:GetRobotAsset.Value>
-                  </ui:GetRobotAsset>
-                  <ui:GetRobotCredential TimeoutMS="{x:Null}" AssetName="Credential Name" CacheStrategy="None" DisplayName="Get Credential" sap:VirtualizedContainerService.HintSize="580.8,183.2" sap2010:WorkflowViewState.IdRef="GetRobotCredential_2" Password="[SharePoint_Password]" Username="[SharePoint_Username]" />
-                  <usa:SharepointApplicationScope AzureApplicationID="{x:Null}" ClientContext="{x:Null}" ClientId="{x:Null}" ClientSecret="{x:Null}" LoginTimeout="{x:Null}" SecurePassword="{x:Null}" AzureAppPermissions="None" DisplayName="Sharepoint application scope" sap:VirtualizedContainerService.HintSize="580.8,1460" sap2010:WorkflowViewState.IdRef="SharepointApplicationScope_2" Password="Pjos@527" PlatformType="Online" QueryGrouping="False" ResetCredentials="False" SharePointInstanceType="Online" URL="[Sharepoint_url]" UserName="prasanth.muthusamy@quadance.com">
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="529.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Share Point Flow Started&quot;]" />
+                  <usa:SharepointApplicationScope AzureApplicationID="{x:Null}" ClientContext="{x:Null}" ClientId="{x:Null}" ClientSecret="{x:Null}" LoginTimeout="{x:Null}" Password="{x:Null}" AzureAppPermissions="None" DisplayName="Sharepoint application scope" sap:VirtualizedContainerService.HintSize="529.6,1351.2" sap2010:WorkflowViewState.IdRef="SharepointApplicationScope_2" PlatformType="Online" QueryGrouping="False" ResetCredentials="False" SecurePassword="[CType(In_Config(&quot;TPL_SharePoint_Credential_Password&quot;),SecureString)]" SharePointInstanceType="Online" URL="[In_Config(In_SharePoint_url_KeyName).ToString]" UserName="[In_Config(&quot;TPL_SharePoint_Credential_Username&quot;).ToString]">
                     <usa:SharepointApplicationScope.Body>
                       <ActivityAction x:TypeArguments="us:SharePointContextInfo">
                         <ActivityAction.Argument>
                           <DelegateInArgument x:TypeArguments="us:SharePointContextInfo" Name="SharePointContextInfoTag" />
                         </ActivityAction.Argument>
-                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="547.2,1317.6" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="496,1208.8" sap2010:WorkflowViewState.IdRef="Sequence_6">
                           <Sequence.Variables>
                             <Variable x:TypeArguments="x:String" Name="SubFolder_Name" />
                           </Sequence.Variables>
@@ -173,15 +149,15 @@
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <Assign DisplayName="Assign_SP_subfolderName" sap:VirtualizedContainerService.HintSize="484.8,81.6" sap2010:WorkflowViewState.IdRef="Assign_12">
+                          <Assign DisplayName="Assign_SP_subfolderName" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_12">
                             <Assign.To>
                               <OutArgument x:TypeArguments="x:String">[SubFolder_Name]</OutArgument>
                             </Assign.To>
                             <Assign.Value>
-                              <InArgument x:TypeArguments="x:String">[Split(SharePoint_FolderName,"/",2)(1)]</InArgument>
+                              <InArgument x:TypeArguments="x:String">[Split(In_Config(In_SharePoint_Folder_KeyName).ToString,"/",2)(1)]</InArgument>
                             </Assign.Value>
                           </Assign>
-                          <Assign DisplayName="Assign_SP_CurrentMonth_Folder" sap:VirtualizedContainerService.HintSize="484.8,81.6" sap2010:WorkflowViewState.IdRef="Assign_3">
+                          <Assign DisplayName="Assign_SP_CurrentMonth_Folder" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_3">
                             <Assign.To>
                               <OutArgument x:TypeArguments="x:String">[SP_currentMonth_Folder]</OutArgument>
                             </Assign.To>
@@ -189,9 +165,9 @@
                               <InArgument x:TypeArguments="x:String">[String.Join(" ",{Now.AddMonths(1).ToString("MMMM"),Now.ToString("yyyy")})]</InArgument>
                             </Assign.Value>
                           </Assign>
-                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="484.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;SP_currentMonth_Folder &quot;+SP_currentMonth_Folder]" />
-                          <usal:CreateFolder AttachmentsAction="{x:Null}" LocalPathHintText="{x:Null}" RelativeUrlHintText="{x:Null}" ChooseFile="False" DisplayName="Create Current month folder" sap:VirtualizedContainerService.HintSize="484.8,102.4" sap2010:WorkflowViewState.IdRef="CreateFolder_3" LibraryName="[SharePoint_Library]" RelativeUrl="[SubFolder_Name+&quot;/&quot;+SP_currentMonth_Folder]" ShowAttachFiles="False" ShowCAMLQuery="False" ShowCAMLWarning="False" ShowGroupDescription="False" ShowGroupName="False" ShowLibraryName="True" ShowListName="False" ShowLocalPath="False" ShowMove="False" ShowPermissionDropdown="False" ShowPropertiesDictionary="False" ShowRelativeUrl="True" ShowRename="False" ShowUserName="False" />
-                          <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="484.8,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;SP_currentMonth_Folder &quot;+SP_currentMonth_Folder]" />
+                          <usal:CreateFolder AttachmentsAction="{x:Null}" LocalPathHintText="{x:Null}" RelativeUrlHintText="{x:Null}" ChooseFile="False" DisplayName="Create Current month folder" sap:VirtualizedContainerService.HintSize="433.6,102.4" sap2010:WorkflowViewState.IdRef="CreateFolder_3" LibraryName="[In_Config(In_SharePoint_Library_KeyName).ToString]" RelativeUrl="[SubFolder_Name+&quot;/&quot;+SP_currentMonth_Folder]" ShowAttachFiles="False" ShowCAMLQuery="False" ShowCAMLWarning="False" ShowGroupDescription="False" ShowGroupName="False" ShowLibraryName="True" ShowListName="False" ShowLocalPath="False" ShowMove="False" ShowPermissionDropdown="False" ShowPropertiesDictionary="False" ShowRelativeUrl="True" ShowRename="False" ShowUserName="False" />
+                          <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="433.6,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_1">
                             <ui:CommentOut.Body>
                               <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="449.6,181.6" sap2010:WorkflowViewState.IdRef="Sequence_14">
                                 <sap:WorkflowViewStateService.ViewState>
@@ -199,7 +175,7 @@
                                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
-                                <usal:GetChildrenNames AttachmentsAction="{x:Null}" LocalPathHintText="{x:Null}" RelativeUrlHintText="{x:Null}" ChildrenNames="[Folder_Names]" ChooseFile="False" DisplayName="Get children names" sap:VirtualizedContainerService.HintSize="387.2,69.6" sap2010:WorkflowViewState.IdRef="GetChildrenNames_2" RelativeUrl="[SharePoint_FolderName]" ShowAttachFiles="False" ShowCAMLQuery="False" ShowCAMLWarning="False" ShowGroupDescription="False" ShowGroupName="False" ShowLibraryName="False" ShowListName="False" ShowLocalPath="False" ShowMove="False" ShowPermissionDropdown="False" ShowPropertiesDictionary="False" ShowRelativeUrl="True" ShowRename="False" ShowUserName="False" />
+                                <usal:GetChildrenNames AttachmentsAction="{x:Null}" LocalPathHintText="{x:Null}" RelativeUrlHintText="{x:Null}" ChildrenNames="[Folder_Names]" ChooseFile="False" DisplayName="Get children names" sap:VirtualizedContainerService.HintSize="387.2,69.6" sap2010:WorkflowViewState.IdRef="GetChildrenNames_2" RelativeUrl="[SharePoint_Upload_FolderName]" ShowAttachFiles="False" ShowCAMLQuery="False" ShowCAMLWarning="False" ShowGroupDescription="False" ShowGroupName="False" ShowLibraryName="False" ShowListName="False" ShowLocalPath="False" ShowMove="False" ShowPermissionDropdown="False" ShowPropertiesDictionary="False" ShowRelativeUrl="True" ShowRename="False" ShowUserName="False" />
                               </Sequence>
                             </ui:CommentOut.Body>
                             <sap:WorkflowViewStateService.ViewState>
@@ -209,7 +185,7 @@
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
                           </ui:CommentOut>
-                          <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="484.8,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_2">
+                          <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="433.6,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_2">
                             <ui:CommentOut.Body>
                               <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="496,193.6" sap2010:WorkflowViewState.IdRef="Sequence_15">
                                 <sap:WorkflowViewStateService.ViewState>
@@ -234,10 +210,10 @@
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
                           </ui:CommentOut>
-                          <Delay Duration="00:00:10" sap:VirtualizedContainerService.HintSize="484.8,24.8" sap2010:WorkflowViewState.IdRef="Delay_3" />
-                          <usal:UploadFile AttachmentsAction="{x:Null}" PropertiesToAdd="{x:Null}" RelativeUrlHintText="{x:Null}" AllowOperationsOnASPXFiles="False" AllowOverwrite="True" CheckInFileAfterCreation="False" CheckOutFileBeforeOverwrite="False" ChooseFile="True" DisplayName="Upload file to Share point" sap:VirtualizedContainerService.HintSize="484.8,102.4" sap2010:WorkflowViewState.IdRef="UploadFile_5" LocalPath="[In_Share_Point_FileName]" LocalPathHintText="The current local path of the file" RelativeUrl="[SharePoint_FolderName+&quot;/&quot;+SP_currentMonth_Folder]" ShowAttachFiles="False" ShowCAMLQuery="False" ShowCAMLWarning="False" ShowGroupDescription="False" ShowGroupName="False" ShowLibraryName="False" ShowListName="False" ShowLocalPath="True" ShowMove="False" ShowPermissionDropdown="False" ShowPropertiesDictionary="False" ShowRelativeUrl="True" ShowRename="False" ShowUserName="False" />
-                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="484.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_15" Level="Info" Message="[SP_Upload_FileName+&quot; File Uploaded to Share Point&quot;]" />
-                          <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="484.8,161.6" sap2010:WorkflowViewState.IdRef="CommentOut_3">
+                          <Delay Duration="00:00:10" sap:VirtualizedContainerService.HintSize="433.6,24.8" sap2010:WorkflowViewState.IdRef="Delay_3" />
+                          <usal:UploadFile AttachmentsAction="{x:Null}" PropertiesToAdd="{x:Null}" RelativeUrlHintText="{x:Null}" AllowOperationsOnASPXFiles="False" AllowOverwrite="True" CheckInFileAfterCreation="False" CheckOutFileBeforeOverwrite="False" ChooseFile="True" DisplayName="Upload file to Share point" sap:VirtualizedContainerService.HintSize="433.6,102.4" sap2010:WorkflowViewState.IdRef="UploadFile_5" LocalPath="[In_Share_Point_FileName]" LocalPathHintText="The current local path of the file" RelativeUrl="[In_Config(In_SharePoint_Folder_KeyName).ToString+&quot;/&quot;+SP_currentMonth_Folder]" ShowAttachFiles="False" ShowCAMLQuery="False" ShowCAMLWarning="False" ShowGroupDescription="False" ShowGroupName="False" ShowLibraryName="False" ShowListName="False" ShowLocalPath="True" ShowMove="False" ShowPermissionDropdown="False" ShowPropertiesDictionary="False" ShowRelativeUrl="True" ShowRename="False" ShowUserName="False" />
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_15" Level="Info" Message="[SP_Upload_FileName+&quot; File Uploaded to Share Point&quot;]" />
+                          <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="433.6,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_3">
                             <ui:CommentOut.Body>
                               <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="449.6,83.2" sap2010:WorkflowViewState.IdRef="Sequence_16">
                                 <sap:WorkflowViewStateService.ViewState>
@@ -261,7 +237,7 @@
                                           <OutArgument x:TypeArguments="x:String">[SP_Upload_FileName]</OutArgument>
                                         </Assign.To>
                                         <Assign.Value>
-                                          <InArgument x:TypeArguments="x:String">["/Shared "+SharePoint_FolderName+"/"+SP_currentMonth_Folder+"/"+In_Share_Point_FileName]</InArgument>
+                                          <InArgument x:TypeArguments="x:String">["/Shared "+SharePoint_Upload_FolderName+"/"+SP_currentMonth_Folder+"/"+In_Share_Point_FileName]</InArgument>
                                         </Assign.Value>
                                       </Assign>
                                       <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;SP_Upload_FileName :&quot;+SP_Upload_FileName]" />
@@ -286,7 +262,7 @@
                                           <OutArgument x:TypeArguments="x:String">[SP_Library_Name]</OutArgument>
                                         </Assign.To>
                                         <Assign.Value>
-                                          <InArgument x:TypeArguments="x:String">[Split(SharePoint_FolderName,"\",2)(0)]</InArgument>
+                                          <InArgument x:TypeArguments="x:String">[Split(SharePoint_Upload_FolderName,"\",2)(0)]</InArgument>
                                         </Assign.Value>
                                       </Assign>
                                       <Assign sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_8">
@@ -294,7 +270,7 @@
                                           <OutArgument x:TypeArguments="x:String">[SP_CreateFolder_Directory]</OutArgument>
                                         </Assign.To>
                                         <Assign.Value>
-                                          <InArgument x:TypeArguments="x:String">[Split(SharePoint_FolderName,"\",2)(1)]</InArgument>
+                                          <InArgument x:TypeArguments="x:String">[Split(SharePoint_Upload_FolderName,"\",2)(1)]</InArgument>
                                         </Assign.Value>
                                       </Assign>
                                       <usal:CreateFolder AttachmentsAction="{x:Null}" LocalPathHintText="{x:Null}" RelativeUrlHintText="{x:Null}" ChooseFile="False" DisplayName="Create folder" sap:VirtualizedContainerService.HintSize="433.6,102.4" sap2010:WorkflowViewState.IdRef="CreateFolder_2" LibraryName="[SP_Library_Name]" RelativeUrl="[SP_CreateFolder_Directory+&quot;/&quot;+SP_currentMonth_Folder]" ShowAttachFiles="False" ShowCAMLQuery="False" ShowCAMLWarning="False" ShowGroupDescription="False" ShowGroupName="False" ShowLibraryName="True" ShowListName="False" ShowLocalPath="False" ShowMove="False" ShowPermissionDropdown="False" ShowPropertiesDictionary="False" ShowRelativeUrl="True" ShowRename="False" ShowUserName="False" />
@@ -304,7 +280,7 @@
                                           <OutArgument x:TypeArguments="x:String">[SP_Upload_FileName]</OutArgument>
                                         </Assign.To>
                                         <Assign.Value>
-                                          <InArgument x:TypeArguments="x:String">["/Shared "+SharePoint_FolderName+"/"+In_Share_Point_FileName]</InArgument>
+                                          <InArgument x:TypeArguments="x:String">["/Shared "+SharePoint_Upload_FolderName+"/"+In_Share_Point_FileName]</InArgument>
                                         </Assign.Value>
                                       </Assign>
                                       <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[&quot;SP_Upload_FileName :&quot;+SP_Upload_FileName]" />
@@ -315,6 +291,12 @@
                                 </If>
                               </Sequence>
                             </ui:CommentOut.Body>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
                           </ui:CommentOut>
                         </Sequence>
                       </ActivityAction>
@@ -329,10 +311,10 @@
                 </Sequence>
               </TryCatch.Try>
               <TryCatch.Catches>
-                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="646.4,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="456,207.2" sap2010:WorkflowViewState.IdRef="Catch`1_1">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
@@ -340,15 +322,14 @@
                     <ActivityAction.Argument>
                       <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                     </ActivityAction.Argument>
-                    <Sequence sap:VirtualizedContainerService.HintSize="449.6,83.2" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                    <Sequence sap:VirtualizedContainerService.HintSize="449.6,136.8" sap2010:WorkflowViewState.IdRef="Sequence_11">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           <x:Boolean x:Key="IsPinned">False</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="387.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Info" Message="[&quot;Share Point Uplaod Exception Details :&quot;+exception.Message]" />
-                      <Rethrow sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
+                      <Rethrow sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="Rethrow_2" />
                     </Sequence>
                   </ActivityAction>
                 </Catch>
