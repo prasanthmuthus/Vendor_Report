@@ -1,0 +1,259 @@
+{
+  "Workflows": [
+    {
+      "Path": null,
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": null,
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Main.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "Download_Folder&Sequence_1",
+        "Update_Query&Sequence_1",
+        "Insert_Query&Flowchart_1",
+        "DB_Query&Sequence_1",
+        "DB_Table&Sequence_1",
+        "Mail_IDs&Sequence_1",
+        "Main_Exception_Details&Sequence_1",
+        "Report_Name&Sequence_1",
+        "Retry_Count&Sequence_1",
+        "AssetName_Sharepoint_URL&Sequence_1",
+        "AssetName_Sharepoint_FolderName&Sequence_1",
+        "Report_File_Name&Sequence_1",
+        "SD_Report_File_Name&Sequence_1",
+        "Business_Exception&Sequence_1",
+        "Transaction_ID&Sequence_1",
+        "Internal_Mail_IDs&Sequence_1",
+        "DP_Connection&Sequence_1",
+        "Str_Password&Sequence_1",
+        "Password&Sequence_1",
+        "Config&Sequence_1",
+        "ShareDrive_KeyName&Sequence_1",
+        "SharePoint_url_KeyName&Sequence_1",
+        "SharePoint_Folder_KeyName&Sequence_1",
+        "SharePoint_Library_KeyName&Sequence_1",
+        "DB_ServerName&Sequence_1",
+        "ConnectionString&Sequence_1",
+        "Username&Sequence_1",
+        "DB_Report&Sequence_1",
+        "DB_Name&Sequence_1",
+        "Status&Sequence_1",
+        "ExceptionType&Sequence_1",
+        "ExceptionDetails&Sequence_1",
+        "InsertedDate&Sequence_1",
+        "UpdatedDate&Sequence_1",
+        "ShareDrive_Exception&Sequence_1",
+        "Share_Point_Exception&Sequence_1",
+        "Vendor_Report_Exception&Sequence_1",
+        "Mail_msg&Sequence_1",
+        "No_Input_Mail&Sequence_1",
+        "Local_Folder&Flowchart_1"
+      ],
+      "ArgumentsSectionElementsOrder": [],
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Get_Report.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "inMailScope&Flowchart_1",
+        "variable1&Sequence_11",
+        "outMailbox&Sequence_11"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "Out_mail_msg",
+        "Out_No_Input_Mail",
+        "Out_Report_Name",
+        "In_Config"
+      ],
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "vendor_report.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "DB_query&Sequence_63",
+        "System_Exception&Sequence_63",
+        "DB_Table&Sequence_63",
+        "Download_Folder&Sequence_63",
+        "Reports_path&Sequence_63",
+        "Is_folder_exist&Sequence_63",
+        "Folder_Names&Sequence_63",
+        "attachments&Sequence_63",
+        "variable1&Sequence_63",
+        "Report_FIles&Sequence_63",
+        "Is_file_available&Sequence_63",
+        "Mail_Subject&Sequence_63",
+        "DT&Sequence_63",
+        "sheet_name&Sequence_63",
+        "Production_Date&Sequence_63",
+        "Row_Count&Sequence_63",
+        "ExceptionType&Sequence_63",
+        "Status&Sequence_63",
+        "Report_Name&Sequence_63",
+        "Transaction_ID&Sequence_63",
+        "DB_Name&Sequence_63",
+        "UpdatedDate&Sequence_63",
+        "InsertedDate&Sequence_63",
+        "ExceptionDetails&Sequence_63",
+        "Is_Report_Download_Folder_Exist&Sequence_52",
+        "dt1&Sequence_28",
+        "Fdt&Sequence_28"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "Out_Business_Exception",
+        "Out_InputReport_File_Name",
+        "In_Retry_Count",
+        "Out_SD_Report_File_Name",
+        "Out_ShareDrive_KeyName",
+        "Out_SharePoint_url_KeyName",
+        "Out_SharePoint_Folder_KeyName",
+        "Out_SharePoint_Library_KeyName",
+        "In_mail_msg",
+        "In_Config",
+        "In_Transaction_ID",
+        "In_Report_Name"
+      ],
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Share_Drive_upload.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "DB_query&Sequence_7",
+        "DB_Table&Sequence_7",
+        "Is_Share_drive_connected&Sequence_1",
+        "ShareDrive_folder_name&Sequence_1",
+        "Is_SD_folder_available&Sequence_1",
+        "Drive_Path&Sequence_1",
+        "Production_Date&Sequence_1",
+        "ShareDrive_Upload_Report_Name&Sequence_1",
+        "DB_Name&Sequence_7",
+        "Status&Sequence_7",
+        "ExceptionType&Sequence_7",
+        "ExceptionDetails&Sequence_7",
+        "InsertedDate&Sequence_7",
+        "UpdatedDate&Sequence_7"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "In_Report_Name",
+        "In_SD_Report_File_Name",
+        "In_Config",
+        "In_Sharedrive_KeyName",
+        "In_TransactionID",
+        "Out_ShareDrive_Exception",
+        "In_Retry_count"
+      ],
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Audit_Log.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "Username&Sequence_4",
+        "Password&Sequence_4",
+        "Str_Password&Sequence_4",
+        "DP_Connection&Sequence_4",
+        "DB_Name&Sequence_4",
+        "DB_ServerName&Sequence_4",
+        "ConnectionString&Sequence_4"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "In_Config",
+        "In_Query",
+        "Out_DB_Report"
+      ],
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Share_point_upload.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "SharePoint_Upload_FolderName&Sequence_10",
+        "Sharepoint_url&Sequence_10",
+        "SP_currentMonth_Folder&Sequence_10",
+        "Is_folder_exist&Sequence_10",
+        "Folder_Names&Sequence_10",
+        "SP_Upload_FileName&Sequence_10",
+        "SharePoint_Username&Sequence_10",
+        "SharePoint_Password&Sequence_10",
+        "SP_Library_Name&Sequence_10",
+        "SharePoint_Library&Sequence_7",
+        "SubFolder_Name&Sequence_6",
+        "SP_CreateFolder_Directory&Sequence_9"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "In_Retry_Count",
+        "In_Share_Point_FileName",
+        "In_Config",
+        "In_SharePoint_url_KeyName",
+        "In_SharePoint_Library_KeyName",
+        "In_SharePoint_Folder_KeyName"
+      ],
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Get_Report_old.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": [
+        "Out_mail_msg",
+        "Out_No_Input_Mail",
+        "Out_Report_Name"
+      ],
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Map_Drive.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "driveAdddress&Sequence_2",
+        "username&Sequence_2",
+        "password&Sequence_2",
+        "connStatus&Sequence_2",
+        "unMapStatus&Sequence_3"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "In_Config",
+        "In_ShareDrive_KeyName",
+        "In_Retry_Count"
+      ],
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "InitAllSettings.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "dt_SettingsAndConstants&Sequence_2",
+        "dt_Assets&Sequence_3",
+        "AssetValue&Sequence_4",
+        "dt_Assets&Sequence_5",
+        "dt_Credentials&Sequence_5",
+        "AssetValue&Sequence_6",
+        "password&Sequence_6",
+        "username&Sequence_6",
+        "usernameKey&Sequence_6",
+        "passwordKey&Sequence_6"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "out_Config",
+        "in_ConfigSheets",
+        "in_ConfigFile"
+      ],
+      "ConstantsSectionElementsOrder": null,
+      "AddedNamespaces": null
+    }
+  ]
+}
