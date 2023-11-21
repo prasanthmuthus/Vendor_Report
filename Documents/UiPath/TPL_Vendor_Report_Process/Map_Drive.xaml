@@ -1,7 +1,6 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Map_Drive" this:Map_Drive.In_Retry_Count="3" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:ama="clr-namespace:ATOS.Map_Network_Drive.Activities;assembly=ATOS.Map_Network_Drive.Activities" xmlns:aua="clr-namespace:ATOS.UnMap_Network_Drive.Activities;assembly=ATOS.UnMap_Network_Drive.Activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="In_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
-    <x:Property Name="In_ShareDrive_KeyName" Type="InArgument(x:String)" />
     <x:Property Name="In_Retry_Count" Type="InArgument(x:Int32)" />
   </x:Members>
   <mva:VisualBasic.Settings>
@@ -135,7 +134,7 @@
                             <OutArgument x:TypeArguments="x:String">[driveAdddress]</OutArgument>
                           </ui:AssignOperation.To>
                           <ui:AssignOperation.Value>
-                            <InArgument x:TypeArguments="x:String">[In_Config(In_ShareDrive_KeyName).ToString]</InArgument>
+                            <InArgument x:TypeArguments="x:String">[In_Config("TPL_ShareDrive_URL").ToString]</InArgument>
                           </ui:AssignOperation.Value>
                         </ui:AssignOperation>
                         <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
@@ -193,7 +192,7 @@
                       <Throw Exception="[new SystemException(&quot;Failed to connect shared drive&quot;)]" sap:VirtualizedContainerService.HintSize="200,24.8" sap2010:WorkflowViewState.IdRef="Throw_1" />
                     </If.Else>
                   </If>
-                  <If Condition="[Directory.Exists(in_Config(In_ShareDrive_KeyName).ToString)]" DisplayName="If_SD_Folder_Exist" sap:VirtualizedContainerService.HintSize="577.6,252" sap2010:WorkflowViewState.IdRef="If_3">
+                  <If Condition="[Directory.Exists(in_Config(&quot;TPL_ShareDrive_URL&quot;).ToString)]" DisplayName="If_SD_Folder_Exist" sap:VirtualizedContainerService.HintSize="577.6,252" sap2010:WorkflowViewState.IdRef="If_3">
                     <If.Then>
                       <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Connection to Shared Drive Successful&quot;]" />
                     </If.Then>

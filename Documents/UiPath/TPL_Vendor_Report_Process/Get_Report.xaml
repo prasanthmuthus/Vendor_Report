@@ -111,9 +111,9 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <Flowchart.StartNode>
-      <x:Reference>__ReferenceID6</x:Reference>
+      <x:Reference>__ReferenceID5</x:Reference>
     </Flowchart.StartNode>
-    <FlowStep x:Name="__ReferenceID6">
+    <FlowStep x:Name="__ReferenceID5">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <av:Point x:Key="ShapeLocation">220,143.6</av:Point>
@@ -137,7 +137,7 @@
               <av:PointCollection x:Key="ConnectorLocation">320,316.4 320,346.4 320.4,346.4 320.4,366.4</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:ExchangeScope ApplicationId="{x:Null}" DirectoryId="{x:Null}" Domain="{x:Null}" EmailAutodiscover="{x:Null}" ExistingExchangeService="{x:Null}" Password="{x:Null}" TimeoutMS="{x:Null}" AuthenticationMode="UserNameAndPassword" DisplayName="Exchange Scope" ExchangeService="[inMailScope]" ExchangeVersion="Exchange2013_SP1" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="ExchangeScope_1" SecurePassword="[CType(In_Config(&quot;TPL_ShareDrive_Credential_Password&quot;),System.Security.SecureString)]" Server="[In_Config(&quot;TPL_Mail_Exchange_Server&quot;).ToString.Trim]" User="[In_Config(&quot;TPL_ShareDrive_Credential_Username&quot;).ToString]">
+          <ui:ExchangeScope ApplicationId="{x:Null}" DirectoryId="{x:Null}" Domain="{x:Null}" EmailAutodiscover="{x:Null}" ExistingExchangeService="{x:Null}" Password="{x:Null}" TimeoutMS="{x:Null}" AuthenticationMode="UserNameAndPassword" DisplayName="Exchange Scope Get" ExchangeService="[inMailScope]" ExchangeVersion="Exchange2013_SP1" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="ExchangeScope_1" SecurePassword="[CType(In_Config(&quot;TPL_ShareDrive_Credential_Password&quot;),System.Security.SecureString)]" Server="[In_Config(&quot;TPL_Mail_Exchange_Server&quot;).ToString.Trim]" User="[In_Config(&quot;TPL_ShareDrive_Credential_Username&quot;).ToString]">
             <ui:ExchangeScope.Body>
               <ActivityAction x:TypeArguments="mewd:ExchangeService">
                 <ActivityAction.Argument>
@@ -159,12 +159,12 @@
             </ui:ExchangeScope.Body>
           </ui:ExchangeScope>
           <FlowStep.Next>
-            <FlowDecision x:Name="__ReferenceID3" Condition="[Out_mail_msg.Count=0]" DisplayName="Flow Decision" sap:VirtualizedContainerService.HintSize="79.2,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+            <FlowDecision x:Name="__ReferenceID3" Condition="[Out_mail_msg.Count=0]" DisplayName="Flow Decision" sap:VirtualizedContainerService.HintSize="78.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <av:Point x:Key="ShapeLocation">280.8,366.4</av:Point>
-                  <av:Size x:Key="ShapeSize">79.2,87.2</av:Size>
+                  <av:Size x:Key="ShapeSize">78.4,87.2</av:Size>
                   <av:PointCollection x:Key="TrueConnector">280.8,410 180,410 180,478.4</av:PointCollection>
                   <av:PointCollection x:Key="FalseConnector">359.2,410 480,410 480,486.4</av:PointCollection>
                 </scg:Dictionary>
@@ -202,12 +202,15 @@
                 </FlowStep>
               </FlowDecision.True>
               <FlowDecision.False>
-                <FlowDecision x:Name="__ReferenceID2" Condition="[Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;ecw productivity report&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;ucc qa audit detail report&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;omega prod by dept&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;nyp prod detail by dept&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;gebbs prod by dept&quot;)]" DisplayName="Flow Decision" sap:VirtualizedContainerService.HintSize="79.2,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                <FlowDecision x:Name="__ReferenceID2" DisplayName="Flow Decision" sap:VirtualizedContainerService.HintSize="78.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                  <FlowDecision.Condition>
+                    <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;ecw productivity report&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;ucc qa audit detail report&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;omega prod by dept&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;nyp prod detail by dept&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;gebbs prod by dept&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;omega_southshore prod by dept&quot;) or Out_mail_msg(0).Subject.ToString.ToLower.Contains(&quot;omega southshore prod by dept&quot;)" />
+                  </FlowDecision.Condition>
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <av:Point x:Key="ShapeLocation">440.8,486.4</av:Point>
-                      <av:Size x:Key="ShapeSize">79.2,87.2</av:Size>
+                      <av:Size x:Key="ShapeSize">78.4,87.2</av:Size>
                       <av:PointCollection x:Key="TrueConnector">440.8,530 380,530 380,649.2</av:PointCollection>
                       <av:PointCollection x:Key="FalseConnector">520,530 550,530 550,290 420,290</av:PointCollection>
                     </scg:Dictionary>
@@ -218,7 +221,6 @@
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <av:Point x:Key="ShapeLocation">163.2,649.2</av:Point>
                           <av:Size x:Key="ShapeSize">433.6,81.6</av:Size>
-                          <av:PointCollection x:Key="ConnectorLocation">380,730.8 380,780.8</av:PointCollection>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
                       <Assign sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_6">
@@ -234,23 +236,6 @@
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
                       </Assign>
-                      <FlowStep.Next>
-                        <FlowStep x:Name="__ReferenceID5">
-                          <sap:WorkflowViewStateService.ViewState>
-                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                              <av:Point x:Key="ShapeLocation">280,780.8</av:Point>
-                              <av:Size x:Key="ShapeSize">200,52.8</av:Size>
-                            </scg:Dictionary>
-                          </sap:WorkflowViewStateService.ViewState>
-                          <ui:MoveMessageToFolder ApplicationId="{x:Null}" DirectoryId="{x:Null}" Domain="{x:Null}" EmailAutodiscover="{x:Null}" Password="{x:Null}" SharedMailbox="{x:Null}" TimeoutMS="{x:Null}" AuthenticationMode="UserNameAndPassword" DisplayName="Move Mail To Processed Folder" ExchangeVersion="Exchange2013_SP1" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="MoveMessageToFolder_3" MailFolder="[In_Config(&quot;TPL_Processed_Mail_Folder&quot;).ToString]" MailMessage="[Out_mail_msg(0)]" SecurePassword="[CType(In_Config(&quot;TPL_ShareDrive_Credential_Password&quot;),System.Security.SecureString)]" Server="[In_Config(&quot;TPL_Mail_Exchange_Server&quot;).ToString.Trim]" User="[In_Config(&quot;TPL_ShareDrive_Credential_Username&quot;).ToString]">
-                            <sap:WorkflowViewStateService.ViewState>
-                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                              </scg:Dictionary>
-                            </sap:WorkflowViewStateService.ViewState>
-                          </ui:MoveMessageToFolder>
-                        </FlowStep>
-                      </FlowStep.Next>
                     </FlowStep>
                   </FlowDecision.True>
                   <FlowDecision.False>
@@ -268,6 +253,5 @@
     <x:Reference>__ReferenceID3</x:Reference>
     <x:Reference>__ReferenceID4</x:Reference>
     <x:Reference>__ReferenceID0</x:Reference>
-    <x:Reference>__ReferenceID5</x:Reference>
   </Flowchart>
 </Activity>

@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1272.8,2056" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1272.8,2056" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mewd="clr-namespace:Microsoft.Exchange.WebServices.Data;assembly=Microsoft.Exchange.WebServices" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>Microsoft.VisualBasic</x:String>
@@ -40,6 +40,9 @@
       <x:String>UiPath.Excel</x:String>
       <x:String>UiPath.Excel.Activities</x:String>
       <x:String>UiPath.Mail.SMTP.Activities</x:String>
+      <x:String>Microsoft.Exchange.WebServices.Data</x:String>
+      <x:String>UiPath.Mail.Exchange</x:String>
+      <x:String>UiPath.Mail.Exchange.Activities</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -87,6 +90,7 @@
       <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>Microsoft.Exchange.WebServices</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Sequence_Main" sap:VirtualizedContainerService.HintSize="1283.2,1991.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -129,6 +133,9 @@
       <Variable x:TypeArguments="x:String" Name="DB_Query" />
       <Variable x:TypeArguments="x:String" Name="Download_Folder" />
       <Variable x:TypeArguments="x:String" Name="Update_Query" />
+      <Variable x:TypeArguments="x:String" Name="ShareDrive_Uploaded_FileName" />
+      <Variable x:TypeArguments="x:String" Name="Insert_Query" />
+      <Variable x:TypeArguments="x:String" Name="Local_Folder" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -138,10 +145,6 @@
     <TryCatch DisplayName="Try Catch_Main" sap:VirtualizedContainerService.HintSize="1220.8,1879.2" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
         <Flowchart DisplayName="Flowchart_Main" sap:VirtualizedContainerService.HintSize="1184,1648" sap2010:WorkflowViewState.IdRef="Flowchart_1">
-          <Flowchart.Variables>
-            <Variable x:TypeArguments="x:String" Name="Local_Folder" />
-            <Variable x:TypeArguments="x:String" Name="Insert_Query" />
-          </Flowchart.Variables>
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -189,10 +192,10 @@
                 </ui:InvokeWorkflowFile>
               </TryCatch.Try>
               <TryCatch.Catches>
-                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="502.4,805.6" sap2010:WorkflowViewState.IdRef="Catch`1_5">
+                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="403.2,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_5">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
@@ -200,7 +203,7 @@
                     <ActivityAction.Argument>
                       <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                     </ActivityAction.Argument>
-                    <Sequence sap:VirtualizedContainerService.HintSize="496,735.2" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                    <Sequence sap:VirtualizedContainerService.HintSize="496,732.8" sap2010:WorkflowViewState.IdRef="Sequence_11">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -304,15 +307,32 @@
                         <av:PointCollection x:Key="ConnectorLocation">430,976.4 430,1016.4</av:PointCollection>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Share_Drive_upload.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Share_Drive_upload.xaml">
+                    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Share_Drive_upload.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Share_Drive_upload.xaml">
                       <ui:InvokeWorkflowFile.Arguments>
-                        <InArgument x:TypeArguments="x:String" x:Key="In_Report_Name">[Report_File_Name]</InArgument>
-                        <InArgument x:TypeArguments="x:Int32" x:Key="In_Retry_count">[Retry_Count]</InArgument>
-                        <InArgument x:TypeArguments="x:String" x:Key="In_SD_Report_File_Name">[SD_Report_File_Name]</InArgument>
-                        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">[new Dictionary(of String,Object)]</InArgument>
-                        <InArgument x:TypeArguments="x:String" x:Key="In_Sharedrive_KeyName">[ShareDrive_KeyName]</InArgument>
-                        <InArgument x:TypeArguments="x:String" x:Key="In_TransactionID">[Transaction_ID]</InArgument>
-                        <OutArgument x:TypeArguments="x:String" x:Key="Out_ShareDrive_Exception">[ShareDrive_Exception]</OutArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="In_Report_Name">
+                          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="Report_File_Name" />
+                        </InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="In_SD_Report_File_Name">
+                          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="SD_Report_File_Name" />
+                        </InArgument>
+                        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">
+                          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="new Dictionary(of String,Object)" />
+                        </InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="In_Sharedrive_KeyName">
+                          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="ShareDrive_KeyName" />
+                        </InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="In_TransactionID">
+                          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="Transaction_ID" />
+                        </InArgument>
+                        <OutArgument x:TypeArguments="x:String" x:Key="Out_ShareDrive_Exception">
+                          <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="ShareDrive_Exception" />
+                        </OutArgument>
+                        <InArgument x:TypeArguments="x:Int32" x:Key="In_Retry_count">
+                          <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="Retry_Count" />
+                        </InArgument>
+                        <OutArgument x:TypeArguments="x:String" x:Key="Out_ShareDrive_Upload_Report_Name">
+                          <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="ShareDrive_Uploaded_FileName" />
+                        </OutArgument>
                       </ui:InvokeWorkflowFile.Arguments>
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -340,16 +360,28 @@
                                 <av:PointCollection x:Key="ConnectorLocation">390,1150 430,1150 430,1226.4</av:PointCollection>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <TryCatch DisplayName="TryCatch_SharePoint" sap:VirtualizedContainerService.HintSize="536,1103.2" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                            <TryCatch DisplayName="TryCatch_SharePoint" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="TryCatch_2">
                               <TryCatch.Try>
                                 <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Share_point_upload.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Share_point_upload.xaml">
                                   <ui:InvokeWorkflowFile.Arguments>
-                                    <InArgument x:TypeArguments="x:Int32" x:Key="In_Retry_Count">[Retry_Count]</InArgument>
-                                    <InArgument x:TypeArguments="x:String" x:Key="In_Share_Point_FileName">C:\Users\Prasanth\Documents\Vendor_Report\UCC QA Audit.xlsx</InArgument>
-                                    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">[new Dictionary(of string,object)]</InArgument>
-                                    <InArgument x:TypeArguments="x:String" x:Key="In_SharePoint_url_KeyName">[SharePoint_url_KeyName]</InArgument>
-                                    <InArgument x:TypeArguments="x:String" x:Key="In_SharePoint_Library_KeyName">[SharePoint_Library_KeyName]</InArgument>
-                                    <InArgument x:TypeArguments="x:String" x:Key="In_SharePoint_Folder_KeyName">[SharePoint_Folder_KeyName]</InArgument>
+                                    <InArgument x:TypeArguments="x:Int32" x:Key="In_Retry_Count">
+                                      <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="Retry_Count" />
+                                    </InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="In_Share_Point_FileName">
+                                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="ShareDrive_Uploaded_FileName" />
+                                    </InArgument>
+                                    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">
+                                      <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="new Dictionary(of string,object)" />
+                                    </InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="In_SharePoint_url_KeyName">
+                                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="SharePoint_url_KeyName" />
+                                    </InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="In_SharePoint_Library_KeyName">
+                                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="SharePoint_Library_KeyName" />
+                                    </InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="In_SharePoint_Folder_KeyName">
+                                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="SharePoint_Folder_KeyName" />
+                                    </InArgument>
                                   </ui:InvokeWorkflowFile.Arguments>
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -359,10 +391,10 @@
                                 </ui:InvokeWorkflowFile>
                               </TryCatch.Try>
                               <TryCatch.Catches>
-                                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="502.4,938.4" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="403.2,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_2">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
@@ -370,7 +402,7 @@
                                     <ActivityAction.Argument>
                                       <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                                     </ActivityAction.Argument>
-                                    <Sequence sap:VirtualizedContainerService.HintSize="496,868" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                                    <Sequence sap:VirtualizedContainerService.HintSize="496,865.6" sap2010:WorkflowViewState.IdRef="Sequence_8">
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -476,12 +508,15 @@
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
                                     <Sequence DisplayName="Sequence_Completed" sap:VirtualizedContainerService.HintSize="200,83.2" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                                      <Sequence.Variables>
+                                        <Variable x:TypeArguments="mewd:ExchangeService" Name="Exchange_Scope" />
+                                      </Sequence.Variables>
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                         </scg:Dictionary>
                                       </sap:WorkflowViewStateService.ViewState>
-                                      <ui:MultipleAssign DisplayName="Multiple Assign_DB_Details" sap:VirtualizedContainerService.HintSize="433.6,226.4" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+                                      <ui:MultipleAssign DisplayName="Multiple Assign_DB_Details" sap:VirtualizedContainerService.HintSize="483.2,226.4" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
                                         <ui:MultipleAssign.AssignOperations>
                                           <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
                                             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
@@ -531,7 +566,7 @@
                                           </scg:List>
                                         </ui:MultipleAssign.AssignOperations>
                                       </ui:MultipleAssign>
-                                      <Assign DisplayName="Assign_DB_Query" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_17">
+                                      <Assign DisplayName="Assign_DB_Query" sap:VirtualizedContainerService.HintSize="483.2,81.6" sap2010:WorkflowViewState.IdRef="Assign_17">
                                         <Assign.To>
                                           <OutArgument x:TypeArguments="x:String">[DB_Query]</OutArgument>
                                         </Assign.To>
@@ -539,7 +574,7 @@
                                           <InArgument x:TypeArguments="x:String">[string.Format("UPDATE {0} SET TransactionID = '{1}', ReportName = '{2}', Status = '{3}', ExceptionType = '{4}', ExceptionMessage = '{5}', UpdatedDate = '{6}' WHERE TransactionID = '{1}'",{DB_Table,Transaction_ID,Report_Name,Status,ExceptionType,ExceptionDetails,UpdatedDate})]</InArgument>
                                         </Assign.Value>
                                       </Assign>
-                                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Audit_Log.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Audit_Log.xaml">
+                                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Audit_Log.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="483.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Audit_Log.xaml">
                                         <ui:InvokeWorkflowFile.Arguments>
                                           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">
                                             <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="Config" />
@@ -550,7 +585,25 @@
                                           <OutArgument x:TypeArguments="sd:DataTable" x:Key="Out_DB_Report" />
                                         </ui:InvokeWorkflowFile.Arguments>
                                       </ui:InvokeWorkflowFile>
-                                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[Report_Name+&quot; is Completed&quot;]" />
+                                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="483.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[Report_Name+&quot; is Completed&quot;]" />
+                                      <ui:ExchangeScope ApplicationId="{x:Null}" DirectoryId="{x:Null}" Domain="{x:Null}" EmailAutodiscover="{x:Null}" ExistingExchangeService="{x:Null}" Password="{x:Null}" TimeoutMS="{x:Null}" AuthenticationMode="UserNameAndPassword" DisplayName="Exchange Scope_Move" ExchangeService="[Exchange_Scope]" ExchangeVersion="Exchange2013_SP1" sap:VirtualizedContainerService.HintSize="483.2,420.8" sap2010:WorkflowViewState.IdRef="ExchangeScope_1" SecurePassword="[CType(Config(&quot;TPL_ShareDrive_Credential_Password&quot;),System.Security.SecureString)]" Server="[Config(&quot;TPL_Mail_Exchange_Server&quot;).ToString]" User="[Config(&quot;TPL_ShareDrive_Credential_Username&quot;).ToString]">
+                                        <ui:ExchangeScope.Body>
+                                          <ActivityAction x:TypeArguments="mewd:ExchangeService">
+                                            <ActivityAction.Argument>
+                                              <DelegateInArgument x:TypeArguments="mewd:ExchangeService" Name="ExchangeConnection" />
+                                            </ActivityAction.Argument>
+                                            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,334.4" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <ui:MoveMessageToFolder ApplicationId="{x:Null}" DirectoryId="{x:Null}" Domain="{x:Null}" EmailAutodiscover="{x:Null}" Password="{x:Null}" SecurePassword="{x:Null}" Server="{x:Null}" SharedMailbox="{x:Null}" TimeoutMS="{x:Null}" User="{x:Null}" AuthenticationMode="UserNameAndPassword" DisplayName="Move Mail Message To Processed Folder" ExchangeVersion="Exchange2013_SP1" sap:VirtualizedContainerService.HintSize="387.2,89.6" sap2010:WorkflowViewState.IdRef="MoveMessageToFolder_1" MailFolder="[Config(&quot;TPL_Processed_Mail_Folder&quot;).ToString]" MailMessage="[Mail_msg(0)]" />
+                                              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="387.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Info" Message="[&quot;Mail has moved to Processed Folder&quot;]" />
+                                            </Sequence>
+                                          </ActivityAction>
+                                        </ui:ExchangeScope.Body>
+                                      </ui:ExchangeScope>
                                     </Sequence>
                                     <FlowStep.Next>
                                       <FlowStep x:Name="__ReferenceID1">
@@ -882,14 +935,14 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Sequence_SystemException" sap:VirtualizedContainerService.HintSize="496,1271.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence DisplayName="Sequence_SystemException" sap:VirtualizedContainerService.HintSize="499.2,1285.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <Assign DisplayName="Assign_Main_Exception_Details" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign DisplayName="Assign_Main_Exception_Details" sap:VirtualizedContainerService.HintSize="436.8,81.6" sap2010:WorkflowViewState.IdRef="Assign_1">
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:String">[Main_Exception_Details]</OutArgument>
                 </Assign.To>
@@ -897,8 +950,8 @@
                   <InArgument x:TypeArguments="x:String">[exception.Message.Replace("'","")]</InArgument>
                 </Assign.Value>
               </Assign>
-              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Main Exception_Details :&quot;+Main_Exception_Details]" />
-              <ui:MultipleAssign DisplayName="Multiple Assign_DB_Details" sap:VirtualizedContainerService.HintSize="433.6,226.4" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="436.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Main Exception_Details :&quot;+Main_Exception_Details]" />
+              <ui:MultipleAssign DisplayName="Multiple Assign_DB_Details" sap:VirtualizedContainerService.HintSize="436.8,226.4" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
                 <ui:MultipleAssign.AssignOperations>
                   <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
                     <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -944,7 +997,7 @@
                   </scg:List>
                 </ui:MultipleAssign.AssignOperations>
               </ui:MultipleAssign>
-              <Assign DisplayName="Assign_DB_Query" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_12">
+              <Assign DisplayName="Assign_DB_Query" sap:VirtualizedContainerService.HintSize="436.8,81.6" sap2010:WorkflowViewState.IdRef="Assign_12">
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:String">[DB_Query]</OutArgument>
                 </Assign.To>
@@ -952,7 +1005,7 @@
                   <InArgument x:TypeArguments="x:String">[string.Format("UPDATE {0} SET TransactionID = '{1}', ReportName = '{2}', Status = '{3}', ExceptionType = '{4}', ExceptionMessage = '{5}', UpdatedDate = '{6}' WHERE TransactionID = '{1}'",{DB_Table,Transaction_ID,Report_Name,Status,ExceptionType,ExceptionDetails,InsertedDate,UpdatedDate})]</InArgument>
                 </Assign.Value>
               </Assign>
-              <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="433.6,328" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+              <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="436.8,344.8" sap2010:WorkflowViewState.IdRef="TryCatch_3">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -962,17 +1015,21 @@
                 <TryCatch.Try>
                   <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Audit_Log.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Audit_Log.xaml">
                     <ui:InvokeWorkflowFile.Arguments>
-                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">[Config]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="In_Query">[DB_Query]</InArgument>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">
+                        <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="Config" />
+                      </InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="In_Query">
+                        <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="DB_Query" />
+                      </InArgument>
                       <OutArgument x:TypeArguments="sd:DataTable" x:Key="Out_DB_Report" />
                     </ui:InvokeWorkflowFile.Arguments>
                   </ui:InvokeWorkflowFile>
                 </TryCatch.Try>
                 <TryCatch.Catches>
-                  <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,163.2" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+                  <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="403.2,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_3">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                         <x:Boolean x:Key="IsPinned">False</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
@@ -985,7 +1042,7 @@
                   </Catch>
                 </TryCatch.Catches>
               </TryCatch>
-              <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" ContinueOnError="{x:Null}" Email="{x:Null}" MailMessage="{x:Null}" Password="{x:Null}" ReplyTo="{x:Null}" Result="{x:Null}" SecurePassword="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" Body="[&quot;&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;TPL vendor Report&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;TPL Vendor Report Exception Alert&lt;/h1&gt;&lt;p&gt;Dear,&lt;/p&gt;&lt;p&gt;We are writing to inform you about the exceptions encountered during the recent TPL Vendor Report Process. Please take a moment to review the details As below&lt;/p&gt;&lt;p&gt;In &quot;+Report_Name+&quot; the following Exception occured.&lt;br&gt;&quot;+Main_Exception_Details+&quot;&lt;/p&gt;&lt;p&gt;Thank you for your cooperation.&lt;/p&gt;&lt;p&gt;Sincerely,&lt;br&gt;TPL Vendor Report&lt;br&gt;Parallon&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&quot;]" DisplayName="Send SMTP Mail Message" EnableSSL="True" From="TPL Vendor Report BOT" sap:VirtualizedContainerService.HintSize="433.6,148.8" sap2010:WorkflowViewState.IdRef="SendMail_2" IgnoreCRL="False" IsBodyHtml="True" Name="Pro Enroll Invoice Extraction" Port="25" SecureConnection="None" Server="10.90.62.1" Subject="TPL Vendor Report Exception Alert" To="[Internal_Mail_IDs]">
+              <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" ContinueOnError="{x:Null}" Email="{x:Null}" MailMessage="{x:Null}" Password="{x:Null}" ReplyTo="{x:Null}" Result="{x:Null}" SecurePassword="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" Body="[&quot;&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;TPL vendor Report&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;TPL Vendor Report Exception Alert&lt;/h1&gt;&lt;p&gt;Dear,&lt;/p&gt;&lt;p&gt;We are writing to inform you about the exceptions encountered during the recent TPL Vendor Report Process. Please take a moment to review the details As below&lt;/p&gt;&lt;p&gt;In &quot;+Report_Name+&quot; the following Exception occured.&lt;br&gt;&quot;+Main_Exception_Details+&quot;&lt;/p&gt;&lt;p&gt;Thank you for your cooperation.&lt;/p&gt;&lt;p&gt;Sincerely,&lt;br&gt;TPL Vendor Report&lt;br&gt;Parallon&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&quot;]" DisplayName="Send SMTP Mail Message" EnableSSL="True" From="TPL Vendor Report BOT" sap:VirtualizedContainerService.HintSize="436.8,148.8" sap2010:WorkflowViewState.IdRef="SendMail_2" IgnoreCRL="False" IsBodyHtml="True" Name="Pro Enroll Invoice Extraction" Port="25" SecureConnection="None" Server="10.90.62.1" Subject="TPL Vendor Report Exception Alert" To="[Internal_Mail_IDs]">
                 <ui:SendMail.Files>
                   <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
                     <InArgument x:TypeArguments="x:String">["TPL_VendorReport_"+Now.ToString("MM_dd_yyyy")+".xlsx"]</InArgument>

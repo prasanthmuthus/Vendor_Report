@@ -7,6 +7,7 @@
     <x:Property Name="In_TransactionID" Type="InArgument(x:String)" />
     <x:Property Name="Out_ShareDrive_Exception" Type="OutArgument(x:String)" />
     <x:Property Name="In_Retry_count" Type="InArgument(x:Int32)" />
+    <x:Property Name="Out_ShareDrive_Upload_Report_Name" Type="OutArgument(x:String)" />
   </x:Members>
   <this:Share_Drive_upload.In_SD_Report_File_Name>
     <InArgument x:TypeArguments="x:String" />
@@ -114,14 +115,14 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <Sequence DisplayName="Share_Drive_upload" sap:VirtualizedContainerService.HintSize="1098.4,1792" sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <Sequence DisplayName="Share_Drive_upload" sap:VirtualizedContainerService.HintSize="1098.4,1913.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
           <Sequence.Variables>
             <Variable x:TypeArguments="x:Boolean" Name="Is_Share_drive_connected" />
-            <Variable x:TypeArguments="x:String" Name="ShareDrive_folder_name" />
+            <Variable x:TypeArguments="x:String" Name="ShareDrive_CurrentMonth_folder_name" />
             <Variable x:TypeArguments="x:Boolean" Name="Is_SD_folder_available" />
             <Variable x:TypeArguments="x:String" Name="Drive_Path" />
             <Variable x:TypeArguments="x:String" Name="Production_Date" />
-            <Variable x:TypeArguments="x:String" Name="ShareDrive_Upload_Report_Name" />
+            <Variable x:TypeArguments="x:String" Name="ShareDrive_Folder_Path" />
           </Sequence.Variables>
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -131,20 +132,31 @@
           <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1036,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Share Drive Flow Started&quot;]" />
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Map_Drive.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="1036,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Map_Drive.xaml">
             <ui:InvokeWorkflowFile.Arguments>
-              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">[In_Config]</InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="In_ShareDrive_KeyName">[In_Sharedrive_KeyName]</InArgument>
-              <InArgument x:TypeArguments="x:Int32" x:Key="In_Retry_Count">[In_Retry_count]</InArgument>
+              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">
+                <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="In_Config" />
+              </InArgument>
+              <InArgument x:TypeArguments="x:Int32" x:Key="In_Retry_Count">
+                <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="In_Retry_count" />
+              </InArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
           <Assign DisplayName="Assign_SD_Folder_Name" sap:VirtualizedContainerService.HintSize="1036,81.6" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
-              <OutArgument x:TypeArguments="x:String">[ShareDrive_folder_name]</OutArgument>
+              <OutArgument x:TypeArguments="x:String">[ShareDrive_CurrentMonth_folder_name]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="x:String">[String.Join("-",{Now.ToString("MMMM"),Now.ToString("yy")})]</InArgument>
+              <InArgument x:TypeArguments="x:String">[String.Join("-",{Now.AddDays(-1).ToString("MMMM"),Now.ToString("yy")})]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:FolderExistsX DisplayName="Check current Month Folder Exists" Exists="[Is_SD_folder_available]" sap:VirtualizedContainerService.HintSize="1036,134.4" sap2010:WorkflowViewState.IdRef="FolderExistsX_2" Path="[path.Combine(In_Config(In_Sharedrive_KeyName).ToString, ShareDrive_folder_name).ToString]" />
+          <Assign sap:VirtualizedContainerService.HintSize="1036,81.6" sap2010:WorkflowViewState.IdRef="Assign_8">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[ShareDrive_Folder_Path]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[Path.Combine(In_Config("TPL_ShareDrive_URL").ToString,Now.AddDays(-1).Year.ToString,In_Config(In_Sharedrive_KeyName).ToString,ShareDrive_CurrentMonth_folder_name)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:FolderExistsX DisplayName="Check current Month Folder Exists" Exists="[Is_SD_folder_available]" sap:VirtualizedContainerService.HintSize="1036,134.4" sap2010:WorkflowViewState.IdRef="FolderExistsX_2" Path="[ShareDrive_Folder_Path]" />
           <If Condition="[Is_SD_folder_available]" DisplayName="If_SD_folder_Exist" sap:VirtualizedContainerService.HintSize="1036,1097.6" sap2010:WorkflowViewState.IdRef="If_2">
             <If.Then>
               <Sequence sap:VirtualizedContainerService.HintSize="496,752" sap2010:WorkflowViewState.IdRef="Sequence_4">
@@ -153,7 +165,7 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[ShareDrive_folder_name.ToString+&quot; Folder Available&quot;]" />
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[ShareDrive_Folder_Path+&quot; Folder Available&quot;]" />
                 <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="433.6,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_1">
                   <ui:CommentOut.Body>
                     <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="449.6,247.2" sap2010:WorkflowViewState.IdRef="Sequence_9">
@@ -181,20 +193,20 @@
                 </ui:CommentOut>
                 <Assign DisplayName="Assign_SD_Upload_ReportName" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_3">
                   <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">[ShareDrive_Upload_Report_Name]</OutArgument>
+                    <OutArgument x:TypeArguments="x:String">[Out_ShareDrive_Upload_Report_Name]</OutArgument>
                   </Assign.To>
                   <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[path.Combine(In_Config(In_Sharedrive_KeyName).ToString,ShareDrive_folder_name,In_SD_Report_File_Name)]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[path.Combine(ShareDrive_Folder_Path,In_SD_Report_File_Name)]</InArgument>
                   </Assign.Value>
                 </Assign>
-                <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[ShareDrive_Upload_Report_Name]" DisplayName="Move File To SD" sap:VirtualizedContainerService.HintSize="433.6,160" sap2010:WorkflowViewState.IdRef="MoveFile_1" Path="[In_Report_Name]">
+                <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[Out_ShareDrive_Upload_Report_Name]" DisplayName="Move File To SD" sap:VirtualizedContainerService.HintSize="433.6,160" sap2010:WorkflowViewState.IdRef="MoveFile_1" Path="[In_Report_Name]">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:MoveFile>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[ShareDrive_Upload_Report_Name+&quot; File moved to share drive&quot;]" />
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[Out_ShareDrive_Upload_Report_Name+&quot; File moved to share drive&quot;]" />
               </Sequence>
             </If.Then>
             <If.Else>
@@ -204,8 +216,8 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[ShareDrive_folder_name.ToString+&quot; Folder Not Available. Create the folder&quot;]" />
-                <ui:CreateDirectory ContinueOnError="{x:Null}" Output="{x:Null}" DisplayName="Create SD current month Folder" sap:VirtualizedContainerService.HintSize="433.6,80.8" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[path.Combine(In_Config(In_Sharedrive_KeyName).ToString, ShareDrive_folder_name).ToString]" />
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[ShareDrive_Folder_Path+&quot; Folder Not Available. Create the folder&quot;]" />
+                <ui:CreateDirectory ContinueOnError="{x:Null}" Output="{x:Null}" DisplayName="Create SD current month Folder" sap:VirtualizedContainerService.HintSize="433.6,80.8" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[ShareDrive_Folder_Path]" />
                 <Delay Duration="00:00:10" sap:VirtualizedContainerService.HintSize="433.6,24.8" sap2010:WorkflowViewState.IdRef="Delay_1" />
                 <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="433.6,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_2">
                   <ui:CommentOut.Body>
@@ -232,22 +244,22 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:CommentOut>
-                <Assign DisplayName="Assign_SD_Upload_ReportName" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_5">
+                <Assign DisplayName="Assign_SD_Upload_ReportName" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_9">
                   <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">[ShareDrive_Upload_Report_Name]</OutArgument>
+                    <OutArgument x:TypeArguments="x:String">[Out_ShareDrive_Upload_Report_Name]</OutArgument>
                   </Assign.To>
                   <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[path.Combine(In_Config(In_Sharedrive_KeyName).ToString,ShareDrive_folder_name,In_SD_Report_File_Name)]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[path.Combine(ShareDrive_Folder_Path,In_SD_Report_File_Name)]</InArgument>
                   </Assign.Value>
                 </Assign>
-                <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[ShareDrive_Upload_Report_Name]" DisplayName="Move File To SD" sap:VirtualizedContainerService.HintSize="433.6,160" sap2010:WorkflowViewState.IdRef="MoveFile_2" Path="[In_Report_Name]">
+                <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[Out_ShareDrive_Upload_Report_Name]" DisplayName="Move File To SD" sap:VirtualizedContainerService.HintSize="433.6,160" sap2010:WorkflowViewState.IdRef="MoveFile_2" Path="[In_Report_Name]">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:MoveFile>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[ShareDrive_Upload_Report_Name+&quot; File moved to share drive&quot;]" />
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[Out_ShareDrive_Upload_Report_Name+&quot; File moved to share drive&quot;]" />
               </Sequence>
             </If.Else>
           </If>
@@ -346,8 +358,12 @@
               </Assign>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Audit_Log.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Audit_Log.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">[In_Config]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="In_Query">[DB_query]</InArgument>
+                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">
+                    <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="In_Config" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="In_Query">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="DB_query" />
+                  </InArgument>
                   <OutArgument x:TypeArguments="sd:DataTable" x:Key="Out_DB_Report" />
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
